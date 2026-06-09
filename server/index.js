@@ -8,10 +8,12 @@ const Lead       = require('./models/Lead')
 const Payment    = require('./models/Payment')
 
 const app = express()
-app.use(cors())
+app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }))
 app.use(express.json())
 
-const RECIPIENT = 'aliyanabbas2812@gmail.com'
+const SMTP_USER = process.env.SMTP_USER || process.env.EMAIL_USER
+const SMTP_PASS = process.env.SMTP_PASS || process.env.EMAIL_PASS
+const RECIPIENT = SMTP_USER
 
 // ─── MongoDB connection ────────────────────────────────────────────────────
 mongoose
@@ -20,10 +22,12 @@ mongoose
   .catch(err => console.error('MongoDB connection error:', err.message))
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: process.env.SMTP_SECURE === 'true',
   auth: {
-    user: process.env.EMAIL_USER,   // your Gmail address
-    pass: process.env.EMAIL_PASS,   // Gmail App Password (16-char)
+    user: SMTP_USER,
+    pass: SMTP_PASS,
   },
 })
 
@@ -78,7 +82,7 @@ app.post('/api/payment-confirmation', async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: `"Middleman CEO Payments" <${process.env.EMAIL_USER}>`,
+      from: `"Middleman CEO Payments" <${SMTP_USER}>`,
       to: RECIPIENT,
       subject: `💳 Payment Confirmed: ${name} — ${pkg || 'Unknown Package'}`,
       html,
@@ -149,7 +153,7 @@ app.post('/api/lead', async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: `"Middleman CEO Leads" <${process.env.EMAIL_USER}>`,
+      from: `"Middleman CEO Leads" <${SMTP_USER}>`,
       to: RECIPIENT,
       subject: `🔥 New Lead: ${name} — ${sourceLabel}`,
       html,
