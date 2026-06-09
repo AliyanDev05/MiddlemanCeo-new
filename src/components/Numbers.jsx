@@ -6,7 +6,13 @@ const cards = [
 
 export default function Numbers() {
   return (
-    <section style={{ padding: '100px 48px', background: '#080808' }}>
+    <section className="numbers-section" style={{ padding: '100px 48px', background: '#080808' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .numbers-section { padding: 64px 20px !important; }
+          .numbers-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <div className="fi" style={{
           fontFamily: "'Barlow Condensed', sans-serif",
@@ -29,7 +35,7 @@ export default function Numbers() {
           The Power Of Small Numbers
         </h2>
 
-        <div className="fi" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
+        <div className="fi numbers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
           {cards.map((c, i) => (
             <NumCard key={i} {...c} />
           ))}

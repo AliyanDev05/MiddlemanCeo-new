@@ -1,6 +1,7 @@
 export default function Hero() {
   return (
     <section
+      className="hero-section"
       style={{
         minHeight: "100vh",
         display: "grid",
@@ -12,6 +13,18 @@ export default function Hero() {
         gap: "60px",
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-section {
+            grid-template-columns: 1fr !important;
+            padding: 90px 20px 60px !important;
+            gap: 32px !important;
+          }
+          .hero-right-col {
+            order: -1;
+          }
+        }
+      `}</style>
       {/* Background grid */}
       <div
         style={{
@@ -156,12 +169,13 @@ export default function Hero() {
 
       {/* Right — Photo frame */}
       <div
-        className="fi"
+        className="fi hero-right-col"
         style={{
           position: "relative",
           zIndex: 1,
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <div
@@ -211,43 +225,41 @@ export default function Hero() {
               filter: "grayscale(10%) contrast(1.05)",
             }}
           />
+        </div>
 
-          {/* Badge — attached to left side of image */}
-          <div
+        {/* Badge — flush below the image, touching it */}
+        <div
+          style={{
+            alignSelf: "flex-start",
+            background: "#C9A84C",
+            padding: "12px 18px",
+            marginTop: "0px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+          }}
+        >
+          <strong
             style={{
-              position: "absolute",
-              left: "-140px",
-              bottom: "25px",
-              background: "#C9A84C",
-              padding: "12px 18px",
-              zIndex: 3,
-              boxShadow: "-4px 4px 16px rgba(0,0,0,0.5)",
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: "1.1rem",
+              letterSpacing: "0.1em",
+              color: "#080808",
+              display: "block",
             }}
           >
-            <strong
-              style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "1.1rem",
-                letterSpacing: "0.1em",
-                color: "#080808",
-                display: "block",
-              }}
-            >
-              Middleman CEO
-            </strong>
-            <span
-              style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "#080808",
-                opacity: 0.7,
-              }}
-            >
-              Founder &amp; Mentor
-            </span>
-          </div>
+            Middleman CEO
+          </strong>
+          <span
+            style={{
+              fontFamily: "'Barlow Condensed', sans-serif",
+              fontSize: "0.65rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "#080808",
+              opacity: 0.7,
+            }}
+          >
+            Founder &amp; Mentor
+          </span>
         </div>
       </div>
     </section>

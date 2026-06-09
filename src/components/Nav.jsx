@@ -1,6 +1,7 @@
 export default function Nav() {
   return (
     <nav
+      className="main-nav"
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         padding: '20px 48px',
@@ -8,6 +9,12 @@ export default function Nav() {
         background: 'linear-gradient(to bottom, rgba(8,8,8,0.97) 0%, transparent 100%)',
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .main-nav { padding: 16px 20px !important; }
+          .main-nav a { padding: 8px 16px !important; font-size: 0.72rem !important; }
+        }
+      `}</style>
       <div style={{
         fontFamily: "'Bebas Neue', sans-serif",
         fontSize: '1.4rem', letterSpacing: '0.18em', color: '#C9A84C',

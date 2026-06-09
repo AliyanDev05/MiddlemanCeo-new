@@ -6,7 +6,13 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section style={{ padding: '100px 48px', background: '#0F0F0F' }}>
+    <section className="testi-section" style={{ padding: '100px 48px', background: '#0F0F0F' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .testi-section { padding: 64px 20px !important; }
+          .testi-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <div className="fi" style={{
           fontFamily: "'Barlow Condensed', sans-serif",
@@ -28,7 +34,7 @@ export default function Testimonials() {
           What People Are Saying
         </h2>
 
-        <div className="fi" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
+        <div className="fi testi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
           {testimonials.map((t, i) => (
             <TestiCard key={i} {...t} />
           ))}
