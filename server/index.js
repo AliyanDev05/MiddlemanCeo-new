@@ -162,8 +162,9 @@ app.post('/api/lead', async (req, res) => {
   }
 })
 
-// Serve built React frontend in production
-if (process.env.NODE_ENV === 'production') {
+// Serve built React frontend only when SERVE_STATIC=true
+// (set this env var only if FE and BE are on the same service)
+if (process.env.SERVE_STATIC === 'true') {
   app.use(express.static(path.join(__dirname, '../dist')))
   app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'))
