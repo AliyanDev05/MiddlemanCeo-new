@@ -3,6 +3,7 @@ const express    = require('express')
 const nodemailer = require('nodemailer')
 const cors       = require('cors')
 const mongoose   = require('mongoose')
+const path       = require('path')
 const Lead       = require('./models/Lead')
 const Payment    = require('./models/Payment')
 
@@ -161,5 +162,13 @@ app.post('/api/lead', async (req, res) => {
   }
 })
 
+// Serve built React frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../dist')))
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'))
+  })
+}
+
 const PORT = process.env.PORT || 3001
-app.listen(PORT, () => console.log(`Lead server running on http://localhost:${PORT}`))
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`))
