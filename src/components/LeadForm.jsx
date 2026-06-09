@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { post } from '../api'
 
 export default function LeadForm({
   source,
@@ -40,15 +41,10 @@ export default function LeadForm({
     setError('')
     setLoading(true)
     try {
-      const res = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(), phone: phone.trim(), email: email.trim(),
-          source, package: packageName,
-        }),
+      const data = await post('/api/lead', {
+        name: name.trim(), phone: phone.trim(), email: email.trim(),
+        source, package: packageName,
       })
-      const data = await res.json()
       if (data.success) {
         sessionStorage.setItem('mmceo_lead_captured', '1')
         sessionStorage.setItem('mmceo_lead_info', JSON.stringify({
